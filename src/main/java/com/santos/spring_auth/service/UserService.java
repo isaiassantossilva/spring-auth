@@ -2,7 +2,7 @@ package com.santos.spring_auth.service;
 
 import com.santos.spring_auth.dto.user.UserRegistrationRequest;
 import com.santos.spring_auth.dto.user.UserResponse;
-import com.santos.spring_auth.entity.User;
+import com.santos.spring_auth.entity.UserEntity;
 import com.santos.spring_auth.exception.DuplicateResourceException;
 import com.santos.spring_auth.exception.ResourceNotFoundException;
 import com.santos.spring_auth.mapper.UserMapper;
@@ -32,9 +32,9 @@ public class UserService {
         if (this.userRepository.existsByEmail(request.email())) {
             throw new DuplicateResourceException("Email already in use: " + request.email());
         }
-        User user = this.userMapper.toEntity(request);
+        UserEntity user = this.userMapper.toEntity(request);
         user.setPassword(this.passwordEncoder.encode(request.password()));
-        User saved = this.userRepository.save(user);
+        UserEntity saved = this.userRepository.save(user);
         log.info("Registered user id={} username={} role={}", saved.getId(), saved.getUsername(), saved.getRole());
         return this.userMapper.toResponse(saved);
     }

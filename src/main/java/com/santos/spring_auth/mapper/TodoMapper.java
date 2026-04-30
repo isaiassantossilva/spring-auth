@@ -3,7 +3,7 @@ package com.santos.spring_auth.mapper;
 import com.santos.spring_auth.dto.todo.TodoCreateRequest;
 import com.santos.spring_auth.dto.todo.TodoResponse;
 import com.santos.spring_auth.dto.todo.TodoUpdateRequest;
-import com.santos.spring_auth.entity.Todo;
+import com.santos.spring_auth.entity.TodoEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,15 +19,15 @@ public interface TodoMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "completed", constant = "false")
-    Todo toEntity(TodoCreateRequest request);
+    TodoEntity toEntity(TodoCreateRequest request);
 
     @Mapping(target = "ownerId", source = "owner.id")
-    TodoResponse toResponse(Todo todo);
+    TodoResponse toResponse(TodoEntity todo);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    void updateEntity(TodoUpdateRequest request, @MappingTarget Todo todo);
+    void updateEntity(TodoUpdateRequest request, @MappingTarget TodoEntity todo);
 }

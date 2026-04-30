@@ -1,6 +1,6 @@
 package com.santos.spring_auth.gateway;
 
-import com.santos.spring_auth.entity.User;
+import com.santos.spring_auth.entity.UserEntity;
 import com.santos.spring_auth.exception.ForbiddenException;
 import com.santos.spring_auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ public class AuthenticatedUserGateway {
 
     private final UserRepository userRepository;
 
-    public User current() {
+    public UserEntity current() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ForbiddenException("No authenticated user in context");

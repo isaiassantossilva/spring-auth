@@ -1,6 +1,6 @@
 package com.santos.spring_auth.config;
 
-import com.santos.spring_auth.entity.User;
+import com.santos.spring_auth.entity.UserEntity;
 import com.santos.spring_auth.enumeration.Role;
 import com.santos.spring_auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class DataBootstrap implements CommandLineRunner {
         if (this.userRepository.existsByUsername(username)) {
             return;
         }
-        User user = User.builder()
+        UserEntity user = UserEntity.builder()
                 .username(username)
                 .email(email)
                 .password(this.passwordEncoder.encode(rawPassword))
