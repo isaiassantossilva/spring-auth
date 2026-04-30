@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17.7-alpine3.22
+    environment:
+      POSTGRES_USER: spring-auth
+      POSTGRES_PASSWORD: spring-auth
+      POSTGRES_DB: spring-auth
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '1GB'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spring-auth -d spring-auth"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s

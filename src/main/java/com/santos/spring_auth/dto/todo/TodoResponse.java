@@ -1,0 +1,13 @@
+package com.santos.spring_auth.dto.todo;
+
+import java.time.Instant;
+
+public record TodoResponse(
+        Long id,
+        String title,
+        String description,
+        boolean completed,
+        Instant createdAt,
+        Instant updatedAt,
+        Long ownerId
+) {}
