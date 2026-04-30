@@ -36,6 +36,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-validation-test")
 
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 
 	compileOnly("org.projectlombok:lombok")

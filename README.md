@@ -69,6 +69,13 @@ JWT settings live under `app.security.jwt`:
 
 In `prod`, `APP_JWT_SECRET` is required.
 
+## API docs (Swagger)
+
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+
+The UI exposes a Bearer/JWT "Authorize" button — paste the `accessToken` from `POST /auth/login` to call protected endpoints from the browser.
+
 ## Endpoints
 
 | Method | Path | Auth | Notes |
