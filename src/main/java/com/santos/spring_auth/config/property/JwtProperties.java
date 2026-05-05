@@ -1,10 +1,9 @@
-package com.santos.spring_auth.config;
+package com.santos.spring_auth.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "app.security.jwt")
 public record JwtProperties(
-        String secret,
-        long ttlMinutes,
+        long ttlSeconds,
         String issuer
 ) {}

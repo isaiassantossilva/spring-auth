@@ -1,68 +1,29 @@
 spring:
   application:
     name: spring-auth
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
 
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-  datasource:
-    url: jdbc:h2:mem:springauth;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: ""
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
-app:
-  bootstrap:
-    admin-username: ${APP_ADMIN_USERNAME:admin}
-    admin-password: ${APP_ADMIN_PASSWORD:admin}
-    admin-email: ${APP_ADMIN_EMAIL:admin@example.com}
-  security:
-    jwt:
-      secret: ${APP_JWT_SECRET:dev-secret-change-me-please-32bytes-minimum-required}
-      ttl-minutes: ${APP_JWT_TTL_MINUTES:60}
-      issuer: ${APP_JWT_ISSUER:spring-auth}
-
-logging:
-  level:
-    com.santos.spring_auth: DEBUG
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/spring-auth}
     username: ${DB_USERNAME:spring-auth}
     password: ${DB_PASSWORD:spring-auth}
-    driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
 
 app:
   bootstrap:
-    admin-username: ${APP_ADMIN_USERNAME:admin}
-    admin-password: ${APP_ADMIN_PASSWORD}
-    admin-email: ${APP_ADMIN_EMAIL:admin@example.com}
+    admin-username: admin
+    admin-password: admin
+    admin-email: admin@example.com
   security:
     jwt:
-      secret: ${APP_JWT_SECRET}
-      ttl-minutes: ${APP_JWT_TTL_MINUTES:60}
-      issuer: ${APP_JWT_ISSUER:spring-auth}
+      ttl-seconds: 3600
+      issuer: spring-auth
+
+jwt:
+  public:
+    key: classpath:publicKey.pem
+  private:
+    key: classpath:privateKey.pem

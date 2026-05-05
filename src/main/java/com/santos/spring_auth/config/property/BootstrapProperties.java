@@ -1,4 +1,4 @@
-package com.santos.spring_auth.config;
+package com.santos.spring_auth.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

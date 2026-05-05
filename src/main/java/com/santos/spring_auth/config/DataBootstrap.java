@@ -1,5 +1,6 @@
 package com.santos.spring_auth.config;
 
+import com.santos.spring_auth.config.property.BootstrapProperties;
 import com.santos.spring_auth.entity.UserEntity;
 import com.santos.spring_auth.enumeration.Role;
 import com.santos.spring_auth.repository.UserRepository;

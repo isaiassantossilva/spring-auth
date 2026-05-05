@@ -1,7 +1,7 @@
 package com.santos.spring_auth;
 
-import com.santos.spring_auth.config.BootstrapProperties;
-import com.santos.spring_auth.config.JwtProperties;
+import com.santos.spring_auth.config.property.BootstrapProperties;
+import com.santos.spring_auth.config.property.JwtProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

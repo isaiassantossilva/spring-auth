@@ -4,8 +4,4 @@ public enum Role {
     ADMIN,
     USER,
     OPERATOR;
-
-    public String authority() {
-        return "ROLE_" + this.name();
-    }
 }
