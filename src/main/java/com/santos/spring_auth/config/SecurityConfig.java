@@ -50,7 +50,7 @@ public class SecurityConfig {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain loginSecurityFilterChain(HttpSecurity http) {
+    public SecurityFilterChain basicAuthFilterChain(HttpSecurity http) {
         http
                 .securityMatcher("/auth/login")
                 .csrf(AbstractHttpConfigurer::disable)
@@ -61,7 +61,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    @Order(2)
+    public SecurityFilterChain jwtFilterChain(HttpSecurity http) {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -70,6 +71,7 @@ public class SecurityConfig {
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest().authenticated()
                 )
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(jwt ->
                                 jwt.jwtAuthenticationConverter(this.jwtAuthenticationConverter())
