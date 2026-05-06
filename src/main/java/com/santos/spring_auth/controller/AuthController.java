@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    @SecurityRequirements(@SecurityRequirement(name = "basicAuth"))
+    @SecurityRequirements(@SecurityRequirement(name = "Basic Auth"))
     public LoginResponse login(@AuthenticationPrincipal UserDetails user) {
         return this.authService.login(user);
     }

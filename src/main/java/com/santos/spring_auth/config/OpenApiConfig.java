@@ -11,19 +11,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(title = "spring-auth API", version = "v1"),
-        security = @SecurityRequirement(name = "bearerAuth")
+        security = @SecurityRequirement(name = "Bearer Auth")
 )
 @SecuritySchemes({
         @SecurityScheme(
-                name = "bearerAuth",
+                name = "Bearer Auth",
                 type = SecuritySchemeType.HTTP,
                 scheme = "bearer",
-                bearerFormat = "JWT"
+                bearerFormat = "JWT",
+                description = "JWT authentication for all endpoints except login"
         ),
         @SecurityScheme(
-                name = "basicAuth",
+                name = "Basic Auth",
                 type = SecuritySchemeType.HTTP,
-                scheme = "basic"
+                scheme = "basic",
+                description = "Basic authentication only for login endpoint"
         )
 })
 public class OpenApiConfig {
