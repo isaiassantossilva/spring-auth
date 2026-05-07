@@ -1,7 +1,7 @@
 package com.santos.spring_auth.mapper;
 
-import com.santos.spring_auth.dto.user.UserRegistrationRequest;
-import com.santos.spring_auth.dto.user.UserResponse;
+import com.santos.spring_auth.dto.user.UserRegistrationRequestDTO;
+import com.santos.spring_auth.dto.user.UserResponseDTO;
 import com.santos.spring_auth.entity.UserEntity;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mapper;
@@ -12,7 +12,7 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
-    UserEntity toEntity(UserRegistrationRequest request);
+    UserEntity toEntity(UserRegistrationRequestDTO request);
 
-    UserResponse toResponse(UserEntity user);
+    UserResponseDTO toDTO(UserEntity user);
 }

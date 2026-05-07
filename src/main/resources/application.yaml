@@ -3,9 +3,9 @@ spring:
     name: spring-auth
 
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/spring-auth}
-    username: ${DB_USERNAME:spring-auth}
-    password: ${DB_PASSWORD:spring-auth}
+    url: jdbc:postgresql://localhost:5432/spring-auth
+    username: spring-auth
+    password: spring-auth
 
   jpa:
     hibernate:

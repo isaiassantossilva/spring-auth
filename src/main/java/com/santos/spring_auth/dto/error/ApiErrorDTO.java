@@ -3,7 +3,7 @@ package com.santos.spring_auth.dto.error;
 import java.time.Instant;
 import java.util.List;
 
-public record ApiError(
+public record ApiErrorDTO(
         Instant timestamp,
         int status,
         String error,

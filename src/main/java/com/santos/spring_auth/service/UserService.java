@@ -1,7 +1,7 @@
 package com.santos.spring_auth.service;
 
-import com.santos.spring_auth.dto.user.UserRegistrationRequest;
-import com.santos.spring_auth.dto.user.UserResponse;
+import com.santos.spring_auth.dto.user.UserRegistrationRequestDTO;
+import com.santos.spring_auth.dto.user.UserResponseDTO;
 import com.santos.spring_auth.entity.UserEntity;
 import com.santos.spring_auth.exception.DuplicateResourceException;
 import com.santos.spring_auth.exception.ResourceNotFoundException;
@@ -25,7 +25,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserResponse register(UserRegistrationRequest request) {
+    public UserResponseDTO register(UserRegistrationRequestDTO request) {
         if (this.userRepository.existsByUsername(request.username())) {
             throw new DuplicateResourceException("Username already in use: " + request.username());
         }
@@ -36,20 +36,20 @@ public class UserService {
         user.setPassword(this.passwordEncoder.encode(request.password()));
         UserEntity saved = this.userRepository.save(user);
         log.info("Registered user id={} username={} role={}", saved.getId(), saved.getUsername(), saved.getRole());
-        return this.userMapper.toResponse(saved);
+        return this.userMapper.toDTO(saved);
     }
 
     @Transactional(readOnly = true)
-    public List<UserResponse> findAll() {
+    public List<UserResponseDTO> findAll() {
         return this.userRepository.findAll().stream()
-                .map(this.userMapper::toResponse)
+                .map(this.userMapper::toDTO)
                 .toList();
     }
 
     @Transactional(readOnly = true)
-    public UserResponse findById(Long id) {
+    public UserResponseDTO findById(Long id) {
         return this.userRepository.findById(id)
-                .map(this.userMapper::toResponse)
+                .map(this.userMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found: " + id));
     }
 

@@ -1,7 +1,7 @@
 package com.santos.spring_auth.controller;
 
-import com.santos.spring_auth.dto.user.UserRegistrationRequest;
-import com.santos.spring_auth.dto.user.UserResponse;
+import com.santos.spring_auth.dto.user.UserRegistrationRequestDTO;
+import com.santos.spring_auth.dto.user.UserResponseDTO;
 import com.santos.spring_auth.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class UserController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or (hasRole('OPERATOR') and #request.role().name() == 'USER')")
-    public ResponseEntity<UserResponse> register(@Valid @RequestBody UserRegistrationRequest request) {
-        UserResponse created = this.userService.register(request);
+    public ResponseEntity<UserResponseDTO> register(@Valid @RequestBody UserRegistrationRequestDTO request) {
+        UserResponseDTO created = this.userService.register(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(created.id())
@@ -41,13 +41,13 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UserResponse> findAll() {
+    public List<UserResponseDTO> findAll() {
         return this.userService.findAll();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public UserResponse findById(@PathVariable Long id) {
+    public UserResponseDTO findById(@PathVariable Long id) {
         return this.userService.findById(id);
     }
 

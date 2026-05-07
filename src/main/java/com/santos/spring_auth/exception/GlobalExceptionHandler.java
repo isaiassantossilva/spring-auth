@@ -1,6 +1,6 @@
 package com.santos.spring_auth.exception;
 
-import com.santos.spring_auth.dto.error.ApiError;
+import com.santos.spring_auth.dto.error.ApiErrorDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,58 +20,53 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiError> handleNotFound(ResourceNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorDTO> handleNotFound(ResourceNotFoundException ex, HttpServletRequest request) {
         return this.build(HttpStatus.NOT_FOUND, ex.getMessage(), request, null);
     }
 
     @ExceptionHandler(DuplicateResourceException.class)
-    public ResponseEntity<ApiError> handleDuplicate(DuplicateResourceException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorDTO> handleDuplicate(DuplicateResourceException ex, HttpServletRequest request) {
         return this.build(HttpStatus.CONFLICT, ex.getMessage(), request, null);
     }
 
-    @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<ApiError> handleForbidden(ForbiddenException ex, HttpServletRequest request) {
-        return this.build(HttpStatus.FORBIDDEN, ex.getMessage(), request, null);
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiError> handleAccessDenied(AccessDeniedException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorDTO> handleAccessDenied(AccessDeniedException ex, HttpServletRequest request) {
         return this.build(HttpStatus.FORBIDDEN, "Access denied", request, null);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ApiError> handleBadCredentials(BadCredentialsException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorDTO> handleBadCredentials(BadCredentialsException ex, HttpServletRequest request) {
         return this.build(HttpStatus.UNAUTHORIZED, "Invalid credentials", request, null);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
-        List<ApiError.FieldViolation> violations = ex.getBindingResult().getFieldErrors().stream()
+    public ResponseEntity<ApiErrorDTO> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        List<ApiErrorDTO.FieldViolation> violations = ex.getBindingResult().getFieldErrors().stream()
                 .map(this::toViolation)
                 .toList();
         return this.build(HttpStatus.BAD_REQUEST, "Validation failed", request, violations);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiError> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorDTO> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
         return this.build(HttpStatus.BAD_REQUEST, ex.getMessage(), request, null);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> handleUnexpected(Exception ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorDTO> handleUnexpected(Exception ex, HttpServletRequest request) {
         log.error("Unhandled exception", ex);
         return this.build(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", request, null);
     }
 
-    private ApiError.FieldViolation toViolation(FieldError fieldError) {
-        return new ApiError.FieldViolation(fieldError.getField(), fieldError.getDefaultMessage());
+    private ApiErrorDTO.FieldViolation toViolation(FieldError fieldError) {
+        return new ApiErrorDTO.FieldViolation(fieldError.getField(), fieldError.getDefaultMessage());
     }
 
-    private ResponseEntity<ApiError> build(HttpStatus status,
-                                           String message,
-                                           HttpServletRequest request,
-                                           List<ApiError.FieldViolation> violations) {
-        ApiError body = new ApiError(
+    private ResponseEntity<ApiErrorDTO> build(HttpStatus status,
+                                              String message,
+                                              HttpServletRequest request,
+                                              List<ApiErrorDTO.FieldViolation> violations) {
+        ApiErrorDTO body = new ApiErrorDTO(
                 Instant.now(),
                 status.value(),
                 status.getReasonPhrase(),

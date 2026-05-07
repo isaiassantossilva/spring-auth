@@ -1,6 +1,6 @@
 package com.santos.spring_auth.controller;
 
-import com.santos.spring_auth.dto.auth.LoginResponse;
+import com.santos.spring_auth.dto.auth.LoginResponseDTO;
 import com.santos.spring_auth.service.AuthService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
@@ -20,7 +20,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @SecurityRequirements(@SecurityRequirement(name = "Basic Auth"))
-    public LoginResponse login(@AuthenticationPrincipal UserDetails user) {
+    public LoginResponseDTO login(@AuthenticationPrincipal UserDetails user) {
         return this.authService.login(user);
     }
 }
